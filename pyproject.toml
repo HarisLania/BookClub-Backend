@@ -1,0 +1,26 @@
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+fix = true
+
+exclude = [
+    "migrations",
+    "__pycache__",
+    "manage.py",
+    "settings.py",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle
+    "F",  # pyflakes
+    "W",  # warnings
+    "I",  # import sorting
+]
+ignore = [
+    "E501",  # line length handled by formatter
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
