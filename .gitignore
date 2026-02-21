@@ -20,3 +20,6 @@ staticfiles/
 
 # OS
 .DS_Store
+
+# Local logs
+logs/

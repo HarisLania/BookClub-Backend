@@ -1,3 +1,5 @@
+import logging
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework.exceptions import NotFound
@@ -11,6 +13,8 @@ from .serializers import (
     CatalogDropdownSerializer,
     CatalogSerializer,
 )
+
+logger = logging.getLogger(__name__)
 
 # Books APIs
 
@@ -67,6 +71,17 @@ class CatalogCreateAPIView(generics.CreateAPIView):
     queryset = Catalog.objects.all()
     serializer_class = CatalogSerializer
 
+    def perform_create(self, serializer):
+        try:
+            catalog = serializer.save()
+            logger.info(f"Catalog created (id={catalog.id}, name={catalog.name})")
+        except Exception as e:
+            logger.exception(
+                "Unexpected error while creating catalog: %s",
+                e,
+            )
+            raise
+
 
 class CatalogManageAPIView(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -90,4 +105,27 @@ class CatalogManageAPIView(generics.RetrieveUpdateDestroyAPIView):
         try:
             return super().get_object()
         except Exception:
+            logger.warning("Catalog not found for given ID")
             raise NotFound(detail="Catalog not found.")
+
+    def perform_update(self, serializer):
+        try:
+            catalog = serializer.save()
+            logger.info(f"Catalog updated (id={catalog.id})")
+        except Exception as e:
+            logger.exception(
+                "Unexpected error while updating catalog: %s",
+                e,
+            )
+            raise
+
+    def perform_destroy(self, instance):
+        try:
+            instance.delete()
+            logger.info(f"Catalog deleted (id={instance.id})")
+        except Exception as e:
+            logger.exception(
+                "Unexpected error while deleting catalog: %s",
+                e,
+            )
+            raise
