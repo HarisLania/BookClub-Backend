@@ -18,6 +18,13 @@ class BookDropdownSerializer(serializers.ModelSerializer):
 
 
 class CatalogSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(
+        error_messages={
+            "required": "Catalog name is required.",
+            "blank": "Catalog name is required.",
+        }
+    )
+
     class Meta:
         model = Catalog
         fields = ["id", "name", "books"]
