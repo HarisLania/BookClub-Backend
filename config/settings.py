@@ -133,6 +133,11 @@ STATIC_URL = 'static/'
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
 
+# NOTE:
+# TimedRotatingFileHandler causes WinError 32 on Windows due to file locking.
+# For local development, we use a simple FileHandler.
+# Log rotation will be handled in production/infrastructure.
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -155,10 +160,8 @@ LOGGING = {
         },
         "file": {
             "level": "INFO",
-            "class": "logging.handlers.TimedRotatingFileHandler",
+            "class": "logging.FileHandler",
             "filename": os.path.join(LOG_DIR, "django.log"),
-            "when": "midnight",
-            "backupCount": 7,  # keep last 7 days
             "formatter": "verbose",
         },
     },
