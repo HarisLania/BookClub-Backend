@@ -27,8 +27,9 @@ This project demonstrates best practices in API design, validation, testing, and
 ### 2. API Endpoints
 
 #### Catalogs
-- `GET /api/catalogs/dropdown/` - List all catalogs
+- `GET /api/catalogs/dropdown/` - List all catalogs (id, name)
 - `POST /api/catalogs/` - Create a new catalog
+- `GET /api/catalogs/` - List all catalogs (id, name, books)
 - `GET /api/catalogs/{id}/` - Retrieve a catalog
 - `PUT /api/catalogs/{id}/` - Update a catalog
 - `DELETE /api/catalogs/{id}/` - Delete a catalog
