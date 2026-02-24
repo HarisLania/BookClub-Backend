@@ -95,6 +95,14 @@ To run the test suite:
 python manage.py test catalog
 ```
 
+## 🧪 Running Linting Check
+
+To run the linting check:
+
+```bash
+ruff check .
+```
+
 ## 📝 API Documentation
 
 ### Swagger / OpenAPI
