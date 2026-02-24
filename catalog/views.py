@@ -63,13 +63,15 @@ class CatalogDropdownAPIView(generics.ListAPIView):
     search_fields = ["name"]
 
 
-class CatalogCreateAPIView(generics.CreateAPIView):
+class CatalogCreateAPIView(generics.ListCreateAPIView):
     """
     Create a new catalog
     """
 
     queryset = Catalog.objects.all()
     serializer_class = CatalogSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ["name"]
 
 
 class CatalogManageAPIView(generics.RetrieveUpdateDestroyAPIView):
